@@ -16,20 +16,20 @@ $especialidadeModel2 = new especialidadeModel();
 
     <?php include "../includes/css.php"; ?>
     <base href="../">
-    <title>Painel medico</title>
+    <title>Painel médico</title>
 </head>
 
 <body class="bg-light">
     <?php include "../navbar.php"; ?>
     <div class="container">
         <div class="row">
-            <h2 class="mx-auto">Medico</h2>
+            <h2 class="mx-auto">Médico</h2>
         </div>
         <div class="row">
             <div class="col-8 offset-2 border">
                 <form action="medico/controller/medicoController.php" method="post">
                     <div class="form-group">
-                        <label for="nome">Nome medico</label>
+                        <label for="nome">Nome médico</label>
                         <input type="text" class="form-control" name="nome" id="nome" required>
                     </div>
                     <div class="form-group">
@@ -144,7 +144,7 @@ $especialidadeModel2 = new especialidadeModel();
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Alterar Medico</h5>
+                    <h5 class="modal-title">Alterar Médico</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -157,7 +157,7 @@ $especialidadeModel2 = new especialidadeModel();
                             <input type="hidden" class="form-control" name="idMedicoUpdate" id="idMedicoUpdateHidden">
                         </div>
                         <div class="form-group">
-                            <label for="nomeUpdate">Nome medico</label>
+                            <label for="nomeUpdate">Nome médico</label>
                             <input type="text" class="form-control" name="nomeUpdate" id="nomeUpdate">
                         </div>
                         <div class="form-group">

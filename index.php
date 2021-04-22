@@ -17,7 +17,7 @@
         <hr class="text-light">
         <div class="row">
             <div class="col-4 offset-2 border p-1 text-center">
-                <a class="btn btn-info " href="medico/index.php">Cadastrar Medico</a>
+                <a class="btn btn-info " href="medico/index.php">Cadastrar Médico</a>
             </div>
             <div class="col-4  border p-1 text-center">
                 <a class="btn btn-info " href="especialidade/index.php">Cadastrar Especialidade</a>
