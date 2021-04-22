@@ -26,15 +26,26 @@ class especialidadeModel
         }
     }
 
+    function getNomeEspecialidade($idEspecialidade)
+    {
+        $query = "SELECT nomeEspecialidade FROM especialidade where idEspecialidade={$idEspecialidade}";
+        $consulta = $this->conn->query($query);
+        $resultado=$consulta->fetch_object();
+
+        return $resultado;
+
+        $this->conn->close();
+    }
+
     function getDadosEspecialidade()
     {
         $query = "SELECT * FROM especialidade";
 
         $resultado = $this->conn->query($query);
 
-        $this->conn->close();
-
         return $resultado;
+
+        $this->conn->close();
     }
 
     function insertEspecialidade($nomeEspecialidade)

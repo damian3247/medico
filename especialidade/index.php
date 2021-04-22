@@ -21,7 +21,7 @@ $especialidadeModel = new especialidadeModel();
     <?php include "../navbar.php"; ?>
     <div class="container">
         <div class="row">
-            <h2 class="mx-auto">Especialidade</h2>
+            <h2 class="mx-auto my-1">Especialidade</h2>
         </div>
         <div class="row">
             <div class="col-8 offset-2 border">

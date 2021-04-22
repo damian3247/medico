@@ -1,8 +1,11 @@
 <?php
 //Painel de cadastro, edição, exclução e listado dos medicos
-//require '../includes/conexion.php';
 require "./model/medicoModel.php";
+require "../especialidade/model/especialidadeModel.php";
+
 $medicoModel = new medicoModel();
+$especialidadeModel = new especialidadeModel();
+$especialidadeModel2 = new especialidadeModel();
 ?>
 <!doctype html>
 <html lang="en">
@@ -40,18 +43,34 @@ $medicoModel = new medicoModel();
                     <div class="form-group">
                         <label for="especialidade1">Especialidade 1</label>
                         <select name="especialidade1" id="especialidade1" class="form-control">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
+                            <?php
+                            $resultEspecialidade = $especialidadeModel->getDadosEspecialidade();
+                            if ($resultEspecialidade->num_rows > 0) {
+                                while ($row = $resultEspecialidade->fetch_assoc()) {
+                            ?>
+                                    <option value="<?= $row['idEspecialidade']; ?>"><?= $row['nomeEspecialidade']; ?></option>
+                            <?php
+                                }
+                            }
+                            ?>
                         </select>
                     </div>
                     <div class="form-group">
                         <label for="especialidade2">Especialidade 2</label>
                         <select name="especialidade2" id="especialidade2" class="form-control">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
+                            <?php
+                            $resultEspecialidade2 = $especialidadeModel2->getDadosEspecialidade();
+                            if ($resultEspecialidade2->num_rows > 0) {
+                                while ($row = $resultEspecialidade2->fetch_assoc()) {
+                            ?>
+                                    <option value="<?= $row['idEspecialidade']; ?>"><?= $row['nomeEspecialidade']; ?></option>
+                            <?php
+                                }
+                            }
+                            ?>
                         </select>
                     </div>
-                    <input type="hidden" name="transacao" value="insert" >
+                    <input type="hidden" name="transacao" value="insert">
                     <button type="submit" class="btn btn-warning d-flex justify-content-center">Guardar</button>
                 </form>
             </div>
@@ -66,6 +85,7 @@ $medicoModel = new medicoModel();
                         <tr>
                             <th>Id</th>
                             <th>Nome</th>
+                            <th>CRM</th>
                             <th>Telefone</th>
                             <th>Especialidade 1</th>
                             <th>Especialidade 2</th>
@@ -75,20 +95,21 @@ $medicoModel = new medicoModel();
                     </thead>
                     <tbody>
                         <?php
-                        $result=$medicoModel->getDadosMedico();
+                        $result = $medicoModel->getDadosMedico();
                         if ($result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) {
                         ?>
                                 <tr>
                                     <td><?= $row["idMedico"]; ?></td>
                                     <td><?= $row["nome"]; ?></td>
+                                    <td><?= $row["crm"]; ?></td>
                                     <td><?= $row["telefone"]; ?></td>
-                                    <td><?= $row["especialidade1"]; ?></td>
-                                    <td><?= $row["especialidade2"]; ?></td>
+                                    <td><?= $especialidadeModel->getNomeEspecialidade($row["especialidade1"])->nomeEspecialidade; ?></td>
+                                    <td><?= $especialidadeModel->getNomeEspecialidade($row["especialidade2"])->nomeEspecialidade; ?></td>
                                     <td>
 
 
-                                        <button data-id-medico="<?= $row["idMedico"]; ?>" data-nome-medico="<?= $row["nome"]; ?>" data-telefone="<?= $row["telefone"]; ?>"  class="btn btn-warning btnAlterar" data-toggle="modal" data-target="#modalAlterar">
+                                        <button data-id-medico="<?= $row["idMedico"]; ?>" data-nome-medico="<?= $row["nome"]; ?>" data-crm="<?= $row["crm"]; ?>" data-telefone="<?= $row["telefone"]; ?>" data-especialidade1="<?= $row["especialidade1"]; ?>" data-especialidade2="<?= $row["especialidade2"]; ?>" class="btn btn-warning btnAlterar" data-toggle="modal" data-target="#modalAlterar">
                                             <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-pencil" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                                 <path fill-rule="evenodd" d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5L13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175l-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
                                             </svg>
@@ -98,7 +119,7 @@ $medicoModel = new medicoModel();
                                     <td>
                                         <form action="medico/controller/medicoController.php" method="post">
                                             <input type="hidden" name="id_medico" value="<?php echo $row["idMedico"]; ?>">
-                                            <input type="hidden" name="transacao" value="delete" >
+                                            <input type="hidden" name="transacao" value="delete">
                                             <button class="btn btn-danger">
                                                 <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash " fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
@@ -111,7 +132,7 @@ $medicoModel = new medicoModel();
                         <?php
                             }
                         }
-                        
+
                         ?>
                     </tbody>
                 </table>
@@ -145,23 +166,41 @@ $medicoModel = new medicoModel();
                         </div>
                         <div class="form-group">
                             <label for="telefoneUpdate">Telefone</label>
-                            <input type="number" class="form-control" name="telefoneUpdate" id="telefoneUpdate">
+                            <input type="text" class="form-control" name="telefoneUpdate" id="telefoneUpdate">
                         </div>
                         <div class="form-group">
-                        <label for="especialidade1">Especialidade 1</label>
-                        <select name="especialidade1" id="especialidade1" class="form-control">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="especialidade2">Especialidade 2</label>
-                        <select name="especialidade2" id="especialidade2" class="form-control">
-                            <option value="1">1</option>
-                            <option value="2">2</option>
-                        </select>
-                    </div>
-                        <input type="hidden" name="transacao" value="update" >
+                            <label for="especialidade1">Especialidade 1</label>
+                            <select name="especialidade1Update" id="especialidade1Update" class="form-control">
+                            <?php
+                                $objEspecialidadeUpdate = new especialidadeModel();
+                                $resultEspecialidadeUpdate = $objEspecialidadeUpdate->getDadosEspecialidade();
+                                if ($resultEspecialidadeUpdate->num_rows > 0) {
+                                    while ($row = $resultEspecialidadeUpdate->fetch_assoc()) {
+                                ?>
+                                        <option value="<?= $row['idEspecialidade']; ?>"><?= $row['nomeEspecialidade']; ?></option>
+                                <?php
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="especialidade2">Especialidade 2</label>
+                            <select name="especialidade2Update" id="especialidade2Update" class="form-control">
+                                <?php
+                                $objEspecialidadeUpdate2 = new especialidadeModel();
+                                $resultEspecialidadeUpdate2 = $objEspecialidadeUpdate2->getDadosEspecialidade();
+                                if ($resultEspecialidadeUpdate2->num_rows > 0) {
+                                    while ($row2 = $resultEspecialidadeUpdate2->fetch_assoc()) {
+                                ?>
+                                        <option value="<?= $row2['idEspecialidade']; ?>"><?= $row2['nomeEspecialidade']; ?></option>
+                                <?php
+                                    }
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <input type="hidden" name="transacao" value="update">
                         <button type="submit" class="btn btn-warning d-flex justify-content-center">Guardar</button>
 
                     </form>
@@ -182,6 +221,10 @@ $medicoModel = new medicoModel();
             $("#idMedicoUpdateHidden").val($(this).attr("data-id-medico"));
             $("#nomeUpdate").val($(this).attr("data-nome-medico"));
             $("#telefoneUpdate").val($(this).attr("data-telefone"));
+            $("#especialidade1Update").val($(this).attr("data-especialidade1"));
+            $("#especialidade2Update").val($(this).attr("data-especialidade2"));
+            $("#crmUpdate").val($(this).attr("data-crm"));
+            
         })
     </script>
 </body>

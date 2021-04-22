@@ -36,6 +36,8 @@ class medicoModel
 
     function getDadosMedico()
     {
+       
+
         $query = "SELECT * FROM medico";
 
         $resultado = $this->conn->query($query);
@@ -47,6 +49,8 @@ class medicoModel
 
     function insertMedico($nome, $CRM, $telefone, $especialidad1, $especialidad2)
     {
+       
+
         $query = " INSERT INTO `medico`
                 (
                 `nome`,
@@ -105,4 +109,20 @@ class medicoModel
         }
         $this->conn->close();
     }
+/*
+    function nomeEspecialidadeId($idEspecialidade)
+    {
+        require "./especialidade/model/especialidadeModel.php";
+        $esp=new especialidadeModel;
+        $esp->getNomeEspecialidade($idEspecialidade);
+        $row = $esp->fetch(PDO::FETCH_ASSOC);
+
+        $gsent = $gbd->prepare("SELECT name, colour FROM fruit");
+        $gsent->execute();
+
+        $result = $gsent->fetch(PDO::FETCH_ASSOC);
+
+        
+    }
+*/
 }

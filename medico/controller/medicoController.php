@@ -7,7 +7,7 @@ switch ($_POST['transacao']) {
         echo $medicoModel->insertMedico($_POST['nome'],$_POST['crm'],$_POST['telefone'],$_POST['especialidade1'],$_POST['especialidade2']);
         break;
     case 'update':
-        echo $medicoModel->updateMedico($_POST['idMedicoUpdate'],$_POST['nomeUpdate'],$_POST['crmUpdate'],$_POST['telefoneUpdate'],$_POST['especialidade1'],$_POST['especialidade2']);
+        echo $medicoModel->updateMedico($_POST['idMedicoUpdate'],$_POST['nomeUpdate'],$_POST['crmUpdate'],$_POST['telefoneUpdate'],$_POST['especialidade1Update'],$_POST['especialidade2Update']);
         break;
     case 'delete':
         echo $medicoModel->deleteMedico($_POST['id_medico']);
